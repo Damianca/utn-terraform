@@ -44,8 +44,7 @@ resource "docker_container" "nginx" {
   mounts {
     target = "/usr/share/nginx/html"
     type   = "bind"
-    source = "/home/dcanovas/Documentos/per/training/tf/clases/clase_01/ejercicio_03/site" 
-    #"${path.module}/site"
+    source = "${path.module}/site" # esta ruta tiene que ser absoluta...
     read_only = true
   }
 
