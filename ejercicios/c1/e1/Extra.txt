@@ -1,0 +1,4 @@
+Ejercicio 1 Clase 1
+
+- Cambiar el contenido del archivo
+- Cambiar el permiso del archivo
