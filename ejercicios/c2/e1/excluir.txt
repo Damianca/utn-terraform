@@ -1,0 +1,11 @@
+﻿Para excluir archivos/recursos de un directorio en terraform tenemos las siguientes opciones:
+
+1. Renombrar .tf a .tf.disabled
+2. Mencionar solo los objetivos deseados:
+
+terraform plan -target=local_file.mi_archivo_uno -target=local_file.mi_archivo_dos
+
+terraform apply -target=local_file.mi_archivo_uno -target=local_file.mi_archivo_dos
+
+3. Comentar el recurso en el archivo .tf.
+4. Mover el .tf a otro directorio.
