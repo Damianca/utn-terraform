@@ -1,1 +1,0 @@
-Lugar para actividades
