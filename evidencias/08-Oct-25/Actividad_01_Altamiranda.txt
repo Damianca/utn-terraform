@@ -1,0 +1,350 @@
+PS C:\Users\maltamiranda\Documents\Curso-AWS-Terraform\utn-terraform\practicas\a1-0810\e1-e2> terraform apply
+Acquiring state lock. This may take a few moments...
+data.aws_subnet.target_subnet: Reading...
+data.aws_vpc.target_vpc: Reading...
+data.aws_subnet.target_subnet: Read complete after 1s [id=subnet-04debad39df922a56]
+data.aws_vpc.target_vpc: Read complete after 2s [id=vpc-0f82cd54f705e66ee]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_s3_bucket.actividad1_e1 will be created
+  + resource "aws_s3_bucket" "actividad1_e1" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "bucket-ejemplo-1-altamiranda"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags                        = {
+          + "Environment" = "Infra-Dev"
+          + "Name"        = "bucket-ejemplo-1-altamiranda"
+          + "Owner"       = "Altamiranda"
+        }
+      + tags_all                    = {
+          + "Environment" = "Infra-Dev"
+          + "Name"        = "bucket-ejemplo-1-altamiranda"
+          + "Owner"       = "Altamiranda"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_security_group.sg_ec2_mysql will be created
+  + resource "aws_security_group" "sg_ec2_mysql" {
+      + arn                    = (known after apply)
+      + description            = "Allow trafic to MySql Server"
+      + egress                 = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + from_port        = 0
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ]
+      + id                     = (known after apply)
+      + ingress                = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + from_port        = 3306
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 3306
+                # (1 unchanged attribute hidden)
+            },
+        ]
+      + name                   = "sg_ec2_mysql"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags_all               = (known after apply)
+      + vpc_id                 = "vpc-0f82cd54f705e66ee"
+    }
+
+  # aws_security_group.sg_ping_max will be created
+  + resource "aws_security_group" "sg_ping_max" {
+      + arn                    = (known after apply)
+      + description            = "Allow ping inbound traffic"
+      + egress                 = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + from_port        = 0
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ]
+      + id                     = (known after apply)
+      + ingress                = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + description      = "Allow Ping(icmp)"
+              + from_port        = -1
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "icmp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = -1
+            },
+        ]
+      + name                   = "allow ping"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags_all               = (known after apply)
+      + vpc_id                 = "vpc-0f82cd54f705e66ee"
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + Rescue_s3_name = "bucket-ejemplo-1-altamiranda"
+  + sg_ec2_mysql   = (known after apply)
+  + sg_ping_max    = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_security_group.sg_ping_max: Creating...
+aws_security_group.sg_ec2_mysql: Creating...
+aws_s3_bucket.actividad1_e1: Creating...
+aws_security_group.sg_ping_max: Creation complete after 5s [id=sg-04475690960322cff]
+aws_security_group.sg_ec2_mysql: Creation complete after 5s [id=sg-017f72526c66dd8ea]
+aws_s3_bucket.actividad1_e1: Creation complete after 5s [id=bucket-ejemplo-1-altamiranda]
+Releasing state lock. This may take a few moments...
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+Rescue_s3_name = "bucket-ejemplo-1-altamiranda"
+sg_ec2_mysql = "sg-017f72526c66dd8ea"
+sg_ping_max = "sg-04475690960322cff"
+PS C:\Users\maltamiranda\Documents\Curso-AWS-Terraform\utn-terraform\practicas\a1-0810\e1-e2> terraform destroy
+Acquiring state lock. This may take a few moments...
+data.aws_subnet.target_subnet: Reading...
+data.aws_vpc.target_vpc: Reading...
+aws_s3_bucket.actividad1_e1: Refreshing state... [id=bucket-ejemplo-1-altamiranda]
+data.aws_subnet.target_subnet: Read complete after 1s [id=subnet-04debad39df922a56]
+data.aws_vpc.target_vpc: Read complete after 2s [id=vpc-0f82cd54f705e66ee]
+aws_security_group.sg_ec2_mysql: Refreshing state... [id=sg-017f72526c66dd8ea]
+aws_security_group.sg_ping_max: Refreshing state... [id=sg-04475690960322cff]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_s3_bucket.actividad1_e1 will be destroyed
+  - resource "aws_s3_bucket" "actividad1_e1" {
+      - arn                         = "arn:aws:s3:::bucket-ejemplo-1-altamiranda" -> null
+      - bucket                      = "bucket-ejemplo-1-altamiranda" -> null
+      - bucket_domain_name          = "bucket-ejemplo-1-altamiranda.s3.amazonaws.com" -> null
+      - bucket_regional_domain_name = "bucket-ejemplo-1-altamiranda.s3.us-east-1.amazonaws.com" -> null
+      - force_destroy               = false -> null
+      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null
+      - id                          = "bucket-ejemplo-1-altamiranda" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {
+          - "Environment" = "Infra-Dev"
+          - "Name"        = "bucket-ejemplo-1-altamiranda"
+          - "Owner"       = "Altamiranda"
+        } -> null
+      - tags_all                    = {
+          - "Environment" = "Infra-Dev"
+          - "Name"        = "bucket-ejemplo-1-altamiranda"
+          - "Owner"       = "Altamiranda"
+        } -> null
+        # (3 unchanged attributes hidden)
+
+      - grant {
+          - id          = "4ed2e6c10f538d567198941bea1e06dc50260c70ba046896aa4954152815714d" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm     = "AES256" -> null
+                    # (1 unchanged attribute hidden)
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_security_group.sg_ec2_mysql will be destroyed
+  - resource "aws_security_group" "sg_ec2_mysql" {
+      - arn                    = "arn:aws:ec2:us-east-1:251964342273:security-group/sg-017f72526c66dd8ea" -> null
+      - description            = "Allow trafic to MySql Server" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-017f72526c66dd8ea" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 3306
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 3306
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - name                   = "sg_ec2_mysql" -> null
+      - owner_id               = "251964342273" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {} -> null
+      - vpc_id                 = "vpc-0f82cd54f705e66ee" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_security_group.sg_ping_max will be destroyed
+  - resource "aws_security_group" "sg_ping_max" {
+      - arn                    = "arn:aws:ec2:us-east-1:251964342273:security-group/sg-04475690960322cff" -> null
+      - description            = "Allow ping inbound traffic" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-04475690960322cff" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - description      = "Allow Ping(icmp)"
+              - from_port        = -1
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "icmp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = -1
+            },
+        ] -> null
+      - name                   = "allow ping" -> null
+      - owner_id               = "251964342273" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {} -> null
+      - vpc_id                 = "vpc-0f82cd54f705e66ee" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Changes to Outputs:
+  - Rescue_s3_name = "bucket-ejemplo-1-altamiranda" -> null
+  - sg_ec2_mysql   = "sg-017f72526c66dd8ea" -> null
+  - sg_ping_max    = "sg-04475690960322cff" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_security_group.sg_ping_max: Destroying... [id=sg-04475690960322cff]
+aws_security_group.sg_ec2_mysql: Destroying... [id=sg-017f72526c66dd8ea]
+aws_s3_bucket.actividad1_e1: Destroying... [id=bucket-ejemplo-1-altamiranda]
+aws_s3_bucket.actividad1_e1: Destruction complete after 1s
+aws_security_group.sg_ping_max: Destruction complete after 2s
+aws_security_group.sg_ec2_mysql: Destruction complete after 2s
+Releasing state lock. This may take a few moments...
+
+Destroy complete! Resources: 3 destroyed.
+PS C:\Users\maltamiranda\Documents\Curso-AWS-Terraform\utn-terraform\practicas\a1-0810\e1-e2> 
