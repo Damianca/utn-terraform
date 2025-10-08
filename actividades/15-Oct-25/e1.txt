@@ -1,0 +1,9 @@
+Ejercicio Objetivo: desplegar una instancia RDS PostgreSQL en AWS con Terraform, accesible solo desde tu IP pública, y sacar por salida el endpoint para conectarte.
+Requisitos:
+(Opcional) psql para probar la conexión
+Qué hay que hacer:
+     1. Crear un Security Group que permita el puerto 5432 sólo desde tu IP.
+     2. Crear un DB Subnet Group usando las subnets del VPC por defecto.
+     3. Desplegar aws_db_instance con PostgreSQL.
+     4. Mostrar outputs con el endpoint y el nombre de la BD.
+     5. Probar conexión y destruir.
