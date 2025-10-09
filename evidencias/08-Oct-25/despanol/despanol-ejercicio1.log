@@ -1,0 +1,210 @@
+terraform apply
+var.apellido
+  Ingrese apellido
+
+  Enter a value: espanol
+
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.aws_s3_bucket.bucket_ejemplo_read will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_s3_bucket" "bucket_ejemplo_read" {
+      + arn                         = (known after apply)
+      + bucket                      = (known after apply)
+      + bucket_domain_name          = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + region                      = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+    }
+
+  # aws_s3_bucket.bucket_ejemplo will be created
+  + resource "aws_s3_bucket" "bucket_ejemplo" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "bucket-ejemplo-1-espanol"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags                        = {
+          + "Environment" = "lab"
+          + "ManagedBy"   = "Terraform"
+          + "Name"        = "bucket-ejemplo-1-espanol"
+          + "Owner"       = "espanol"
+        }
+      + tags_all                    = {
+          + "Environment" = "lab"
+          + "ManagedBy"   = "Terraform"
+          + "Name"        = "bucket-ejemplo-1-espanol"
+          + "Owner"       = "espanol"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_public_access_block.this will be created
+  + resource "aws_s3_bucket_public_access_block" "this" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + restrict_public_buckets = true
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bucket_name_data     = (known after apply)
+  + bucket_name_resource = "bucket-ejemplo-1-espanol"
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_s3_bucket.bucket_ejemplo: Creating...
+aws_s3_bucket.bucket_ejemplo: Creation complete after 4s [id=bucket-ejemplo-1-espanol]
+data.aws_s3_bucket.bucket_ejemplo_read: Reading...
+aws_s3_bucket_public_access_block.this: Creating...
+data.aws_s3_bucket.bucket_ejemplo_read: Read complete after 0s [id=bucket-ejemplo-1-espanol]
+aws_s3_bucket_public_access_block.this: Creation complete after 0s [id=bucket-ejemplo-1-espanol]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+bucket_name_data = "bucket-ejemplo-1-espanol"
+bucket_name_resource = "bucket-ejemplo-1-espanol"
+demian@AR01ENOT0579:~/tmp/aws-terraform-curso/ejercicios-creados$ terraform destroy
+var.apellido
+  Ingrese apellido
+
+  Enter a value: espanol
+
+aws_s3_bucket.bucket_ejemplo: Refreshing state... [id=bucket-ejemplo-1-espanol]
+data.aws_s3_bucket.bucket_ejemplo_read: Reading...
+aws_s3_bucket_public_access_block.this: Refreshing state... [id=bucket-ejemplo-1-espanol]
+data.aws_s3_bucket.bucket_ejemplo_read: Read complete after 1s [id=bucket-ejemplo-1-espanol]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_s3_bucket.bucket_ejemplo will be destroyed
+  - resource "aws_s3_bucket" "bucket_ejemplo" {
+      - arn                         = "arn:aws:s3:::bucket-ejemplo-1-espanol" -> null
+      - bucket                      = "bucket-ejemplo-1-espanol" -> null
+      - bucket_domain_name          = "bucket-ejemplo-1-espanol.s3.amazonaws.com" -> null
+      - bucket_regional_domain_name = "bucket-ejemplo-1-espanol.s3.us-east-1.amazonaws.com" -> null
+      - force_destroy               = true -> null
+      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null
+      - id                          = "bucket-ejemplo-1-espanol" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "us-east-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {
+          - "Environment" = "lab"
+          - "ManagedBy"   = "Terraform"
+          - "Name"        = "bucket-ejemplo-1-espanol"
+          - "Owner"       = "espanol"
+        } -> null
+      - tags_all                    = {
+          - "Environment" = "lab"
+          - "ManagedBy"   = "Terraform"
+          - "Name"        = "bucket-ejemplo-1-espanol"
+          - "Owner"       = "espanol"
+        } -> null
+        # (3 unchanged attributes hidden)
+
+      - grant {
+          - id          = "4ed2e6c10f538d567198941bea1e06dc50260c70ba046896aa4954152815714d" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm     = "AES256" -> null
+                    # (1 unchanged attribute hidden)
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_s3_bucket_public_access_block.this will be destroyed
+  - resource "aws_s3_bucket_public_access_block" "this" {
+      - block_public_acls       = true -> null
+      - block_public_policy     = true -> null
+      - bucket                  = "bucket-ejemplo-1-espanol" -> null
+      - id                      = "bucket-ejemplo-1-espanol" -> null
+      - ignore_public_acls      = true -> null
+      - restrict_public_buckets = true -> null
+    }
+
+Plan: 0 to add, 0 to change, 2 to destroy.
+
+Changes to Outputs:
+  - bucket_name_data     = "bucket-ejemplo-1-espanol" -> null
+  - bucket_name_resource = "bucket-ejemplo-1-espanol" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_s3_bucket_public_access_block.this: Destroying... [id=bucket-ejemplo-1-espanol]
+aws_s3_bucket_public_access_block.this: Destruction complete after 1s
+aws_s3_bucket.bucket_ejemplo: Destroying... [id=bucket-ejemplo-1-espanol]
+aws_s3_bucket.bucket_ejemplo: Destruction complete after 1s
+
+Destroy complete! Resources: 2 destroyed.
