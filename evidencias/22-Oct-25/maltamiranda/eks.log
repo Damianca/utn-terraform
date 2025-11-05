@@ -1,0 +1,1007 @@
+PS C:\Users\maltamiranda\Documents\WORKSPACE\UTN\curso terra 2\practicas\actividades\22-Oct-25> terraform apply  
+Acquiring state lock. This may take a few moments...
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_eks_cluster.eks-Max will be created
+  + resource "aws_eks_cluster" "eks-Max" {
+      + arn                           = (known after apply)
+      + bootstrap_self_managed_addons = true
+      + certificate_authority         = (known after apply)
+      + cluster_id                    = (known after apply)
+      + created_at                    = (known after apply)
+      + endpoint                      = (known after apply)
+      + id                            = (known after apply)
+      + identity                      = (known after apply)
+      + name                          = "Eks-Max"
+      + platform_version              = (known after apply)
+      + role_arn                      = (known after apply)
+      + status                        = (known after apply)
+      + tags_all                      = (known after apply)
+      + version                       = "1.32"
+
+      + access_config (known after apply)
+
+      + kubernetes_network_config (known after apply)
+
+      + upgrade_policy (known after apply)
+
+      + vpc_config {
+          + cluster_security_group_id = (known after apply)
+          + endpoint_private_access   = false
+          + endpoint_public_access    = true
+          + public_access_cidrs       = (known after apply)
+          + security_group_ids        = (known after apply)
+          + subnet_ids                = (known after apply)
+          + vpc_id                    = (known after apply)
+        }
+    }
+
+  # aws_eks_node_group.eks_node_group will be created
+  + resource "aws_eks_node_group" "eks_node_group" {
+      + ami_type               = (known after apply)
+      + arn                    = (known after apply)
+      + capacity_type          = (known after apply)
+      + cluster_name           = "Eks-Max"
+      + disk_size              = (known after apply)
+      + id                     = (known after apply)
+      + instance_types         = [
+          + "t3.micro",
+        ]
+      + node_group_name        = "eks-single-node"
+      + node_group_name_prefix = (known after apply)
+      + node_role_arn          = (known after apply)
+      + release_version        = (known after apply)
+      + resources              = (known after apply)
+      + status                 = (known after apply)
+      + subnet_ids             = (known after apply)
+      + tags_all               = (known after apply)
+      + version                = (known after apply)
+
+      + node_repair_config (known after apply)
+
+      + scaling_config {
+          + desired_size = 1
+          + max_size     = 1
+          + min_size     = 1
+        }
+
+      + update_config (known after apply)
+    }
+
+  # aws_iam_role.eks_cluster_role will be created
+  + resource "aws_iam_role" "eks_cluster_role" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "eks.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "eks-cluster-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role.eks_node_group_role will be created
+  + resource "aws_iam_role" "eks_node_group_role" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "ec2.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "eks-node-group-max-role"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy (known after apply)
+    }
+
+  # aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly will be created
+  + resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      + role       = "eks-node-group-max-role"
+    }
+
+  # aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy will be created
+  + resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+      + role       = "eks-node-group-max-role"
+    }
+
+  # aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy will be created
+  + resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      + role       = "eks-node-group-max-role"
+    }
+
+  # aws_iam_role_policy_attachment.eks_cluster_AmazonEKSClusterPolicy will be created
+  + resource "aws_iam_role_policy_attachment" "eks_cluster_AmazonEKSClusterPolicy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      + role       = "eks-cluster-role"
+    }
+
+  # aws_internet_gateway.gw will be created
+  + resource "aws_internet_gateway" "gw" {
+      + arn      = (known after apply)
+      + id       = (known after apply)
+      + owner_id = (known after apply)
+      + tags     = {
+          + "Name" = "VPC-Max-IGW"
+        }
+      + tags_all = {
+          + "Name" = "VPC-Max-IGW"
+        }
+      + vpc_id   = (known after apply)
+    }
+
+  # aws_route_table.public_rt will be created
+  + resource "aws_route_table" "public_rt" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = [
+          + {
+              + cidr_block                 = "0.0.0.0/0"
+              + gateway_id                 = (known after apply)
+                # (11 unchanged attributes hidden)
+            },
+        ]
+      + tags             = {
+          + "Name" = "Public-Route-Table"
+        }
+      + tags_all         = {
+          + "Name" = "Public-Route-Table"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # aws_route_table_association.public_1a will be created
+  + resource "aws_route_table_association" "public_1a" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # aws_route_table_association.public_1b will be created
+  + resource "aws_route_table_association" "public_1b" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # aws_security_group.eks_sg will be created
+  + resource "aws_security_group" "eks_sg" {
+      + arn                    = (known after apply)
+      + description            = "Security group for EKS cluster"
+      + egress                 = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + from_port        = 0
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ]
+      + id                     = (known after apply)
+      + ingress                = [
+          + {
+              + cidr_blocks      = [
+                  + "0.0.0.0/0",
+                ]
+              + from_port        = 443
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 443
+                # (1 unchanged attribute hidden)
+            },
+        ]
+      + name                   = "eks-sg"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name" = "eks-cluster-sg"
+        }
+      + tags_all               = {
+          + "Name" = "eks-cluster-sg"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # aws_subnet.public_1a will be created
+  + resource "aws_subnet" "public_1a" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.0.16/28"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = true
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Name" = "Public-Subnet-1a"
+        }
+      + tags_all                                       = {
+          + "Name" = "Public-Subnet-1a"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # aws_subnet.public_1b will be created
+  + resource "aws_subnet" "public_1b" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.0.32/28"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = true
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Name" = "Public-Subnet-1b"
+        }
+      + tags_all                                       = {
+          + "Name" = "Public-Subnet-1b"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # aws_vpc.main will be created
+  + resource "aws_vpc" "main" {
+      + arn                                  = (known after apply)
+      + cidr_block                           = "10.0.0.0/16"
+      + default_network_acl_id               = (known after apply)
+      + default_route_table_id               = (known after apply)
+      + default_security_group_id            = (known after apply)
+      + dhcp_options_id                      = (known after apply)
+      + enable_dns_hostnames                 = true
+      + enable_dns_support                   = true
+      + enable_network_address_usage_metrics = (known after apply)
+      + id                                   = (known after apply)
+      + instance_tenancy                     = "default"
+      + ipv6_association_id                  = (known after apply)
+      + ipv6_cidr_block                      = (known after apply)
+      + ipv6_cidr_block_network_border_group = (known after apply)
+      + main_route_table_id                  = (known after apply)
+      + owner_id                             = (known after apply)
+      + tags                                 = {
+          + "Name" = "VPC-Max"
+        }
+      + tags_all                             = {
+          + "Name" = "VPC-Max"
+        }
+    }
+
+Plan: 16 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_iam_role.eks_node_group_role: Creating...
+aws_vpc.main: Creating...
+aws_iam_role.eks_cluster_role: Creating...
+aws_iam_role.eks_node_group_role: Creation complete after 1s [id=eks-node-group-max-role]
+aws_iam_role.eks_cluster_role: Creation complete after 1s [id=eks-cluster-role]
+aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy: Creating...
+aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly: Creating...
+aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy: Creating...
+aws_iam_role_policy_attachment.eks_cluster_AmazonEKSClusterPolicy: Creating...
+aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy: Creation complete after 1s [id=eks-node-group-max-role-20251105131929465300000001]
+aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly: Creation complete after 1s [id=eks-node-group-max-role-20251105131929486700000002]
+aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy: Creation complete after 1s [id=eks-node-group-max-role-20251105131929708400000003]
+aws_iam_role_policy_attachment.eks_cluster_AmazonEKSClusterPolicy: Creation complete after 1s [id=eks-cluster-role-20251105131929752000000004]
+aws_vpc.main: Still creating... [00m10s elapsed]
+aws_vpc.main: Creation complete after 14s [id=vpc-0effd17e40d5ce9d8]
+aws_internet_gateway.gw: Creating...
+aws_subnet.public_1a: Creating...
+aws_subnet.public_1b: Creating...
+aws_security_group.eks_sg: Creating...
+aws_internet_gateway.gw: Creation complete after 2s [id=igw-0a5614bf8e1ee5512]
+aws_route_table.public_rt: Creating...
+aws_route_table.public_rt: Creation complete after 2s [id=rtb-0492359e56dda732e]
+aws_security_group.eks_sg: Creation complete after 5s [id=sg-0f91423920a9fbfb6]
+aws_subnet.public_1a: Still creating... [00m10s elapsed]
+aws_subnet.public_1b: Still creating... [00m10s elapsed]
+aws_subnet.public_1b: Creation complete after 13s [id=subnet-08c71ea6bf6cea68c]
+aws_subnet.public_1a: Creation complete after 14s [id=subnet-0e9ad97275f5baada]
+aws_route_table_association.public_1a: Creating...
+aws_route_table_association.public_1b: Creating...
+aws_eks_cluster.eks-Max: Creating...
+aws_route_table_association.public_1b: Creation complete after 1s [id=rtbassoc-0c687c923437c981b]
+aws_route_table_association.public_1a: Creation complete after 1s [id=rtbassoc-02609699db60c7bc3]
+aws_eks_cluster.eks-Max: Still creating... [00m10s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [00m20s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [00m30s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [00m40s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [00m50s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [01m00s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [01m10s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [01m20s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [01m30s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [01m40s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [01m50s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [02m00s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [02m10s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [02m20s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [02m30s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [02m40s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [02m50s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [03m00s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [03m10s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [03m20s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [03m30s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [03m40s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [03m50s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [04m00s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [04m10s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [04m20s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [04m30s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [04m40s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [04m50s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [05m00s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [05m10s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [05m20s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [05m30s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [05m40s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [05m50s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [06m00s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [06m10s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [06m20s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [06m30s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [06m40s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [06m50s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [07m00s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [07m10s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [07m20s elapsed]
+aws_eks_cluster.eks-Max: Still creating... [07m30s elapsed]
+aws_eks_cluster.eks-Max: Creation complete after 7m31s [id=Eks-Max]
+aws_eks_node_group.eks_node_group: Creating...
+aws_eks_node_group.eks_node_group: Still creating... [00m10s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [00m20s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [00m30s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [00m40s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [00m50s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [01m00s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [01m10s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [01m20s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [01m30s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [01m40s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [01m50s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [02m00s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [02m10s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [02m20s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [02m30s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [02m40s elapsed]
+aws_eks_node_group.eks_node_group: Still creating... [02m50s elapsed]
+aws_eks_node_group.eks_node_group: Creation complete after 2m51s [id=Eks-Max:eks-single-node]
+Releasing state lock. This may take a few moments...
+
+Apply complete! Resources: 16 added, 0 changed, 0 destroyed.
+
+
+
+
+######################################################
+######################################################
+
+
+
+
+
+
+
+PS C:\Users\maltamiranda\Documents\WORKSPACE\UTN\curso terra 2\practicas\actividades\22-Oct-25> terraform destroy
+Acquiring state lock. This may take a few moments...
+aws_iam_role.eks_node_group_role: Refreshing state... [id=eks-node-group-max-role]
+aws_vpc.main: Refreshing state... [id=vpc-0effd17e40d5ce9d8]
+aws_iam_role.eks_cluster_role: Refreshing state... [id=eks-cluster-role]
+aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly: Refreshing state... [id=eks-node-group-max-role-20251105131929486700000002]
+aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy: Refreshing state... [id=eks-node-group-max-role-20251105131929708400000003]
+aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy: Refreshing state... [id=eks-node-group-max-role-20251105131929465300000001]
+aws_iam_role_policy_attachment.eks_cluster_AmazonEKSClusterPolicy: Refreshing state... [id=eks-cluster-role-20251105131929752000000004]
+aws_internet_gateway.gw: Refreshing state... [id=igw-0a5614bf8e1ee5512]
+aws_subnet.public_1a: Refreshing state... [id=subnet-0e9ad97275f5baada]
+aws_subnet.public_1b: Refreshing state... [id=subnet-08c71ea6bf6cea68c]
+aws_security_group.eks_sg: Refreshing state... [id=sg-0f91423920a9fbfb6]
+aws_route_table.public_rt: Refreshing state... [id=rtb-0492359e56dda732e]
+aws_route_table_association.public_1a: Refreshing state... [id=rtbassoc-02609699db60c7bc3]
+aws_route_table_association.public_1b: Refreshing state... [id=rtbassoc-0c687c923437c981b]
+aws_eks_cluster.eks-Max: Refreshing state... [id=Eks-Max]
+aws_eks_node_group.eks_node_group: Refreshing state... [id=Eks-Max:eks-single-node]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_eks_cluster.eks-Max will be destroyed
+  - resource "aws_eks_cluster" "eks-Max" {
+      - arn                           = "arn:aws:eks:us-east-1:251964342273:cluster/Eks-Max" -> null
+      - bootstrap_self_managed_addons = true -> null
+      - certificate_authority         = [
+          - {
+              - data = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJZVNnUG5ncUhSNHd3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TlRFeE1EVXhNekl3TlROYUZ3MHpOVEV4TURNeE16STFOVE5hTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUREREk5dndTQjVmR0hMcGtqM1RZNU5kOG9FOUhiNVNWOVM4UGExVk1XZFNGdWY4dU02bXNFa05sUkoKV1JxTVFpMlA5dUJ3QXh6c1pwRit3VCsvUjJycTZOeXl2eG5seHNETHVOd0d6L0hhKytabmN3dEdjWUJmUXRXUQpqbS9rVE9uM2s4T2hJN0YvbU9hcGU2WlhFcnNVYzJxRXhBNll1N0c5RzBrVVpueUNCMGNUY1NJSjMvQVhCMjRGCm5MRCtjbC9yOE0zQ0NqNTQ2MC9JQjc0VUI2WWNkTVN6K09ra05FSDMwZzBMZ2U5S2NlaSt5Mld3V29pRjBhdVoKSTZFcEk0K05oM2JxK3JEaE5SeGQ0QkplOTRhZUc4cjZaT1dDbDNhamEwQnZMOXVpcGlzUDVxcXJWZDM5ODNRdAo1NnhoVWNUVjQ2Tlh2MFlKcXJ1WmoxNTBDb0diQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJTNG85Nlhxa296ZHprVUljTVpVYTRPUXZhR3l6QVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQXZpYXF2ZXc1aQpYV0xaT3d3UFVqbkZTZng4em5xcm9pM2hpSkwwczRPeU14bU5NbWpPdTZrZzFHL29Gcm43V0h2dFJiQXpJdFI5CmpkT3UvVXlHamxRTk1Cbjh1NjF1K2dSMG9HdFUzZGg3ei9xNlkzeFlLQ1ZLRDhzWWFqUzVtNnhncmZoQjRXNUwKMUM4QkNFYUhRSHBUWmlKUzg3OWdyam52dVIrWFNWNlcrcUN4Mk9acnRBQ3N4NitCUjdWWVdKcjd5cUtmdkErVwpCbTcwbU43bkdxa2J3RC9aaVpDcEg4NXRUd0ZwYTZxTXJtYVd0YXBxRnBueDg0Q2cva0c3dENmam9KVUtKZVNkCm1OeTFEYW1Id2gwQVBkV1c5eWdJUTVXaHpzWU1xaUk2aXJMbVg4bGRseCtyOUd1TnJwK0tPUnVlWFM2ZDJzZjUKOHFEYWJNb0xJYkNjCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+            },
+        ] -> null
+      - created_at                    = "2025-11-05T13:19:58Z" -> null
+      - enabled_cluster_log_types     = [] -> null
+      - endpoint                      = "https://1CCC232C1F7B2617E23C2F0FC9B7683F.gr7.us-east-1.eks.amazonaws.com" -> null
+      - id                            = "Eks-Max" -> null
+      - identity                      = [
+          - {
+              - oidc = [
+                  - {
+                      - issuer = "https://oidc.eks.us-east-1.amazonaws.com/id/1CCC232C1F7B2617E23C2F0FC9B7683F"
+                    },
+                ]
+            },
+        ] -> null
+      - name                          = "Eks-Max" -> null
+      - platform_version              = "eks.27" -> null
+      - role_arn                      = "arn:aws:iam::251964342273:role/eks-cluster-role" -> null
+      - status                        = "ACTIVE" -> null
+      - tags                          = {} -> null
+      - tags_all                      = {} -> null
+      - version                       = "1.32" -> null
+
+      - access_config {
+          - authentication_mode                         = "CONFIG_MAP" -> null
+          - bootstrap_cluster_creator_admin_permissions = true -> null
+        }
+
+      - kubernetes_network_config {
+          - ip_family         = "ipv4" -> null
+          - service_ipv4_cidr = "172.20.0.0/16" -> null
+            # (1 unchanged attribute hidden)
+
+          - elastic_load_balancing {
+              - enabled = false -> null
+            }
+        }
+
+      - upgrade_policy {
+          - support_type = "EXTENDED" -> null
+        }
+
+      - vpc_config {
+          - cluster_security_group_id = "sg-00087bfaf2698ad0f" -> null
+          - endpoint_private_access   = false -> null
+          - endpoint_public_access    = true -> null
+          - public_access_cidrs       = [
+              - "0.0.0.0/0",
+            ] -> null
+          - security_group_ids        = [
+              - "sg-0f91423920a9fbfb6",
+            ] -> null
+          - subnet_ids                = [
+              - "subnet-08c71ea6bf6cea68c",
+              - "subnet-0e9ad97275f5baada",
+            ] -> null
+          - vpc_id                    = "vpc-0effd17e40d5ce9d8" -> null
+        }
+    }
+
+  # aws_eks_node_group.eks_node_group will be destroyed
+  - resource "aws_eks_node_group" "eks_node_group" {
+      - ami_type               = "AL2023_x86_64_STANDARD" -> null
+      - arn                    = "arn:aws:eks:us-east-1:251964342273:nodegroup/Eks-Max/eks-single-node/2acd2a19-b7a2-df17-c5a1-161f446d5015" -> null
+      - capacity_type          = "ON_DEMAND" -> null
+      - cluster_name           = "Eks-Max" -> null
+      - disk_size              = 20 -> null
+      - id                     = "Eks-Max:eks-single-node" -> null
+      - instance_types         = [
+          - "t3.micro",
+        ] -> null
+      - labels                 = {} -> null
+      - node_group_name        = "eks-single-node" -> null
+      - node_role_arn          = "arn:aws:iam::251964342273:role/eks-node-group-max-role" -> null
+      - release_version        = "1.32.9-20251103" -> null
+      - resources              = [
+          - {
+              - autoscaling_groups              = [
+                  - {
+                      - name = "eks-eks-single-node-2acd2a19-b7a2-df17-c5a1-161f446d5015"
+                    },
+                ]
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - status                 = "ACTIVE" -> null
+      - subnet_ids             = [
+          - "subnet-08c71ea6bf6cea68c",
+          - "subnet-0e9ad97275f5baada",
+        ] -> null
+      - tags                   = {} -> null
+      - tags_all               = {} -> null
+      - version                = "1.32" -> null
+        # (1 unchanged attribute hidden)
+
+      - scaling_config {
+          - desired_size = 1 -> null
+          - max_size     = 1 -> null
+          - min_size     = 1 -> null
+        }
+
+      - update_config {
+          - max_unavailable            = 1 -> null
+          - max_unavailable_percentage = 0 -> null
+        }
+    }
+
+  # aws_iam_role.eks_cluster_role will be destroyed
+  - resource "aws_iam_role" "eks_cluster_role" {
+      - arn                   = "arn:aws:iam::251964342273:role/eks-cluster-role" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "eks.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2025-11-05T13:19:28Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "eks-cluster-role" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "eks-cluster-role" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {} -> null
+      - unique_id             = "AROATVKR6YAAUQ2SZXHYQ" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_iam_role.eks_node_group_role will be destroyed
+  - resource "aws_iam_role" "eks_node_group_role" {
+      - arn                   = "arn:aws:iam::251964342273:role/eks-node-group-max-role" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "ec2.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2025-11-05T13:19:28Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "eks-node-group-max-role" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+          - "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+          - "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "eks-node-group-max-role" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {} -> null
+      - unique_id             = "AROATVKR6YAARKBJKUAGQ" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly will be destroyed
+  - resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
+      - id         = "eks-node-group-max-role-20251105131929486700000002" -> null
+      - policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly" -> null
+      - role       = "eks-node-group-max-role" -> null
+    }
+
+  # aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy will be destroyed
+  - resource "aws_iam_role_policy_attachment" "AmazonEKSWorkerNodePolicy" {
+      - id         = "eks-node-group-max-role-20251105131929708400000003" -> null
+      - policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy" -> null
+      - role       = "eks-node-group-max-role" -> null
+    }
+
+  # aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy will be destroyed
+  - resource "aws_iam_role_policy_attachment" "AmazonEKS_CNI_Policy" {
+      - id         = "eks-node-group-max-role-20251105131929465300000001" -> null
+      - policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy" -> null
+      - role       = "eks-node-group-max-role" -> null
+    }
+
+  # aws_iam_role_policy_attachment.eks_cluster_AmazonEKSClusterPolicy will be destroyed
+  - resource "aws_iam_role_policy_attachment" "eks_cluster_AmazonEKSClusterPolicy" {
+      - id         = "eks-cluster-role-20251105131929752000000004" -> null
+      - policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy" -> null
+      - role       = "eks-cluster-role" -> null
+    }
+
+  # aws_internet_gateway.gw will be destroyed
+  - resource "aws_internet_gateway" "gw" {
+      - arn      = "arn:aws:ec2:us-east-1:251964342273:internet-gateway/igw-0a5614bf8e1ee5512" -> null
+      - id       = "igw-0a5614bf8e1ee5512" -> null
+      - owner_id = "251964342273" -> null
+      - tags     = {
+          - "Name" = "VPC-Max-IGW"
+        } -> null
+      - tags_all = {
+          - "Name" = "VPC-Max-IGW"
+        } -> null
+      - vpc_id   = "vpc-0effd17e40d5ce9d8" -> null
+    }
+
+  # aws_route_table.public_rt will be destroyed
+  - resource "aws_route_table" "public_rt" {
+      - arn              = "arn:aws:ec2:us-east-1:251964342273:route-table/rtb-0492359e56dda732e" -> null
+      - id               = "rtb-0492359e56dda732e" -> null
+      - owner_id         = "251964342273" -> null
+      - propagating_vgws = [] -> null
+      - route            = [
+          - {
+              - cidr_block                 = "0.0.0.0/0"
+              - gateway_id                 = "igw-0a5614bf8e1ee5512"
+                # (11 unchanged attributes hidden)
+            },
+        ] -> null
+      - tags             = {
+          - "Name" = "Public-Route-Table"
+        } -> null
+      - tags_all         = {
+          - "Name" = "Public-Route-Table"
+        } -> null
+      - vpc_id           = "vpc-0effd17e40d5ce9d8" -> null
+    }
+
+  # aws_route_table_association.public_1a will be destroyed
+  - resource "aws_route_table_association" "public_1a" {
+      - id             = "rtbassoc-02609699db60c7bc3" -> null
+      - route_table_id = "rtb-0492359e56dda732e" -> null
+      - subnet_id      = "subnet-0e9ad97275f5baada" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_route_table_association.public_1b will be destroyed
+  - resource "aws_route_table_association" "public_1b" {
+      - id             = "rtbassoc-0c687c923437c981b" -> null
+      - route_table_id = "rtb-0492359e56dda732e" -> null
+      - subnet_id      = "subnet-08c71ea6bf6cea68c" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_security_group.eks_sg will be destroyed
+  - resource "aws_security_group" "eks_sg" {
+      - arn                    = "arn:aws:ec2:us-east-1:251964342273:security-group/sg-0f91423920a9fbfb6" -> null
+      - description            = "Security group for EKS cluster" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-0f91423920a9fbfb6" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 443
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 443
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - name                   = "eks-sg" -> null
+      - owner_id               = "251964342273" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "Name" = "eks-cluster-sg"
+        } -> null
+      - tags_all               = {
+          - "Name" = "eks-cluster-sg"
+        } -> null
+      - vpc_id                 = "vpc-0effd17e40d5ce9d8" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_subnet.public_1a will be destroyed
+  - resource "aws_subnet" "public_1a" {
+      - arn                                            = "arn:aws:ec2:us-east-1:251964342273:subnet/subnet-0e9ad97275f5baada" -> null
+      - assign_ipv6_address_on_creation                = false -> null
+      - availability_zone                              = "us-east-1a" -> null
+      - availability_zone_id                           = "use1-az6" -> null
+      - cidr_block                                     = "10.0.0.16/28" -> null
+      - enable_dns64                                   = false -> null
+      - enable_lni_at_device_index                     = 0 -> null
+      - enable_resource_name_dns_a_record_on_launch    = false -> null
+      - enable_resource_name_dns_aaaa_record_on_launch = false -> null
+      - id                                             = "subnet-0e9ad97275f5baada" -> null
+      - ipv6_native                                    = false -> null
+      - map_customer_owned_ip_on_launch                = false -> null
+      - map_public_ip_on_launch                        = true -> null
+      - owner_id                                       = "251964342273" -> null
+      - private_dns_hostname_type_on_launch            = "ip-name" -> null
+      - tags                                           = {
+          - "Name" = "Public-Subnet-1a"
+        } -> null
+      - tags_all                                       = {
+          - "Name" = "Public-Subnet-1a"
+        } -> null
+      - vpc_id                                         = "vpc-0effd17e40d5ce9d8" -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_subnet.public_1b will be destroyed
+  - resource "aws_subnet" "public_1b" {
+      - arn                                            = "arn:aws:ec2:us-east-1:251964342273:subnet/subnet-08c71ea6bf6cea68c" -> null
+      - assign_ipv6_address_on_creation                = false -> null
+      - availability_zone                              = "us-east-1b" -> null
+      - availability_zone_id                           = "use1-az1" -> null
+      - cidr_block                                     = "10.0.0.32/28" -> null
+      - enable_dns64                                   = false -> null
+      - enable_lni_at_device_index                     = 0 -> null
+      - enable_resource_name_dns_a_record_on_launch    = false -> null
+      - enable_resource_name_dns_aaaa_record_on_launch = false -> null
+      - id                                             = "subnet-08c71ea6bf6cea68c" -> null
+      - ipv6_native                                    = false -> null
+      - map_customer_owned_ip_on_launch                = false -> null
+      - map_public_ip_on_launch                        = true -> null
+      - owner_id                                       = "251964342273" -> null
+      - private_dns_hostname_type_on_launch            = "ip-name" -> null
+      - tags                                           = {
+          - "Name" = "Public-Subnet-1b"
+        } -> null
+      - tags_all                                       = {
+          - "Name" = "Public-Subnet-1b"
+        } -> null
+      - vpc_id                                         = "vpc-0effd17e40d5ce9d8" -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_vpc.main will be destroyed
+  - resource "aws_vpc" "main" {
+      - arn                                  = "arn:aws:ec2:us-east-1:251964342273:vpc/vpc-0effd17e40d5ce9d8" -> null
+      - assign_generated_ipv6_cidr_block     = false -> null
+      - cidr_block                           = "10.0.0.0/16" -> null
+      - default_network_acl_id               = "acl-04b0efcbb648ef27c" -> null
+      - default_route_table_id               = "rtb-038ba9d71fc57cb9b" -> null
+      - default_security_group_id            = "sg-0f746b2d12754d332" -> null
+      - dhcp_options_id                      = "dopt-001234ca7f8ff6381" -> null
+      - enable_dns_hostnames                 = true -> null
+      - enable_dns_support                   = true -> null
+      - enable_network_address_usage_metrics = false -> null
+      - id                                   = "vpc-0effd17e40d5ce9d8" -> null
+      - instance_tenancy                     = "default" -> null
+      - ipv6_netmask_length                  = 0 -> null
+      - main_route_table_id                  = "rtb-038ba9d71fc57cb9b" -> null
+      - owner_id                             = "251964342273" -> null
+      - tags                                 = {
+          - "Name" = "VPC-Max"
+        } -> null
+      - tags_all                             = {
+          - "Name" = "VPC-Max"
+        } -> null
+        # (4 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 0 to change, 16 to destroy.
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_route_table_association.public_1a: Destroying... [id=rtbassoc-02609699db60c7bc3]
+aws_route_table_association.public_1b: Destroying... [id=rtbassoc-0c687c923437c981b]
+aws_eks_node_group.eks_node_group: Destroying... [id=Eks-Max:eks-single-node]
+aws_route_table_association.public_1b: Destruction complete after 1s
+aws_route_table_association.public_1a: Destruction complete after 1s
+aws_route_table.public_rt: Destroying... [id=rtb-0492359e56dda732e]
+aws_route_table.public_rt: Destruction complete after 1s
+aws_internet_gateway.gw: Destroying... [id=igw-0a5614bf8e1ee5512]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 00m10s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 00m10s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 00m20s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 00m20s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 00m30s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 00m30s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 00m40s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 00m40s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 00m50s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 00m50s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 01m00s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 01m00s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 01m10s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 01m10s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 01m20s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 01m20s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 01m30s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 01m30s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 01m40s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 01m40s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 01m50s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 01m50s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 02m00s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 02m00s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 02m10s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 02m10s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 02m20s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 02m20s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 02m30s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 02m30s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 02m40s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 02m40s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 02m50s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 02m50s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 03m00s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 03m00s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 03m10s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 03m10s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 03m20s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 03m20s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 03m30s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 03m30s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 03m40s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 03m40s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 03m50s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 03m50s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 04m00s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 04m00s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 04m10s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 04m10s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 04m20s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 04m20s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 04m30s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 04m30s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 04m40s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 04m40s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 04m50s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 04m50s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 05m00s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 05m00s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 05m10s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 05m10s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 05m20s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 05m20s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 05m30s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 05m30s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 05m40s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 05m40s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 05m50s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 05m50s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 06m00s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 06m00s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 06m10s elapsed]
+aws_internet_gateway.gw: Still destroying... [id=igw-0a5614bf8e1ee5512, 06m10s elapsed]
+aws_internet_gateway.gw: Destruction complete after 6m12s
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 06m20s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 06m30s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 06m40s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 06m50s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 07m00s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 07m10s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 07m20s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 07m30s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 07m40s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 07m50s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 08m00s elapsed]
+aws_eks_node_group.eks_node_group: Still destroying... [id=Eks-Max:eks-single-node, 08m10s elapsed]
+aws_eks_node_group.eks_node_group: Destruction complete after 8m12s
+aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy: Destroying... [id=eks-node-group-max-role-20251105131929708400000003]
+aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly: Destroying... [id=eks-node-group-max-role-20251105131929486700000002]
+aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy: Destroying... [id=eks-node-group-max-role-20251105131929465300000001]
+aws_eks_cluster.eks-Max: Destroying... [id=Eks-Max]
+aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy: Destruction complete after 1s
+aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy: Destruction complete after 1s
+aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly: Destruction complete after 1s
+aws_iam_role.eks_node_group_role: Destroying... [id=eks-node-group-max-role]
+aws_iam_role.eks_node_group_role: Destruction complete after 1s
+aws_eks_cluster.eks-Max: Still destroying... [id=Eks-Max, 00m10s elapsed]
+aws_eks_cluster.eks-Max: Still destroying... [id=Eks-Max, 00m20s elapsed]
+aws_eks_cluster.eks-Max: Still destroying... [id=Eks-Max, 00m30s elapsed]
+aws_eks_cluster.eks-Max: Still destroying... [id=Eks-Max, 00m40s elapsed]
+aws_eks_cluster.eks-Max: Still destroying... [id=Eks-Max, 00m50s elapsed]
+aws_eks_cluster.eks-Max: Still destroying... [id=Eks-Max, 01m00s elapsed]
+aws_eks_cluster.eks-Max: Destruction complete after 1m5s
+aws_iam_role_policy_attachment.eks_cluster_AmazonEKSClusterPolicy: Destroying... [id=eks-cluster-role-20251105131929752000000004]
+aws_subnet.public_1b: Destroying... [id=subnet-08c71ea6bf6cea68c]
+aws_subnet.public_1a: Destroying... [id=subnet-0e9ad97275f5baada]
+aws_security_group.eks_sg: Destroying... [id=sg-0f91423920a9fbfb6]
+aws_iam_role_policy_attachment.eks_cluster_AmazonEKSClusterPolicy: Destruction complete after 1s
+aws_iam_role.eks_cluster_role: Destroying... [id=eks-cluster-role]
+aws_subnet.public_1b: Destruction complete after 1s
+aws_subnet.public_1a: Destruction complete after 1s
+aws_iam_role.eks_cluster_role: Destruction complete after 0s
+aws_security_group.eks_sg: Destruction complete after 2s
+aws_vpc.main: Destroying... [id=vpc-0effd17e40d5ce9d8]
+aws_vpc.main: Destruction complete after 1s
+Releasing state lock. This may take a few moments...
+
+Destroy complete! Resources: 16 destroyed.
+PS C:\Users\maltamiranda\Documents\WORKSPACE\UTN\curso terra 2\practicas\actividades\22-Oct-25> 
