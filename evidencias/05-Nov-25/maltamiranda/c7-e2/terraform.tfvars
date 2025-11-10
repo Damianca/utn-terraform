@@ -1,0 +1,5 @@
+aws_region         = "us-east-1"
+cluster_name       = "maltamiranda-msk-cluster"
+ec2_instance_type  = "t2.micro"
+ec2_ami            = "ami-0df8c184d5f6ae949"
+ec2_key            = "Max"

@@ -1,0 +1,610 @@
+PS C:\Users\maltamiranda\Documents\WORKSPACE\UTN\curso terra 2\practicas\actividades\c7-e2> terraform destroy
+data.aws_key_pair.Max: Reading...
+aws_iam_role.ec2_role: Refreshing state... [id=ec2-msk-role]
+aws_vpc.max: Refreshing state... [id=vpc-0af1392eb90db5461]
+aws_iam_policy.msk_policy: Refreshing state... [id=arn:aws:iam::251964342273:policy/msk-access-policy]
+data.aws_key_pair.Max: Read complete after 0s [id=key-002590f11487e43e2]
+aws_iam_role_policy_attachment.attach_policy: Refreshing state... [id=ec2-msk-role/arn:aws:iam::251964342273:policy/msk-access-policy]
+aws_iam_instance_profile.ec2_instance_profile: Refreshing state... [id=ec2-msk-profile]
+aws_internet_gateway.igw: Refreshing state... [id=igw-0c53cf0673bf2d356]
+aws_subnet.subnet2: Refreshing state... [id=subnet-0031158b04510140b]
+aws_subnet.subnet1: Refreshing state... [id=subnet-08ca6ae74fe9ed600]
+aws_security_group.msk_sg: Refreshing state... [id=sg-017110096379ddfe4]
+aws_security_group.ec2_sg: Refreshing state... [id=sg-04c2c62ee6e457543]
+aws_route_table.public_rt: Refreshing state... [id=rtb-0ddbba6b06b24c2bf]
+aws_instance.ec2: Refreshing state... [id=i-0a462b3feffc1679a]
+aws_msk_cluster.msk: Refreshing state... [id=arn:aws:kafka:us-east-1:251964342273:cluster/maltamiranda-msk-cluster/049be1dd-8314-4daa-aa00-cb08a4ffda78-11]
+aws_route_table_association.public_1a: Refreshing state... [id=rtbassoc-085192f6641423fd3]
+aws_route_table_association.public_1b: Refreshing state... [id=rtbassoc-0ebafa09d7365f6a1]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_iam_instance_profile.ec2_instance_profile will be destroyed
+  - resource "aws_iam_instance_profile" "ec2_instance_profile" {
+      - arn         = "arn:aws:iam::251964342273:instance-profile/ec2-msk-profile" -> null
+      - create_date = "2025-11-10T15:49:37Z" -> null
+      - id          = "ec2-msk-profile" -> null
+      - name        = "ec2-msk-profile" -> null
+      - path        = "/" -> null
+      - role        = "ec2-msk-role" -> null
+      - tags        = {} -> null
+      - tags_all    = {} -> null
+      - unique_id   = "AIPATVKR6YAAQHZ35XFZJ" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_iam_policy.msk_policy will be destroyed
+  - resource "aws_iam_policy" "msk_policy" {
+      - arn              = "arn:aws:iam::251964342273:policy/msk-access-policy" -> null
+      - attachment_count = 1 -> null
+      - description      = "Allow access to MSK cluster" -> null
+      - id               = "arn:aws:iam::251964342273:policy/msk-access-policy" -> null
+      - name             = "msk-access-policy" -> null
+      - path             = "/" -> null
+      - policy           = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = [
+                          - "kafka:DescribeCluster",
+                          - "kafka:GetBootstrapBrokers",
+                          - "kafka:ListNodes",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = "*"
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - policy_id        = "ANPATVKR6YAA3CZCL7ACH" -> null
+      - tags             = {} -> null
+      - tags_all         = {} -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_iam_role.ec2_role will be destroyed
+  - resource "aws_iam_role" "ec2_role" {
+      - arn                   = "arn:aws:iam::251964342273:role/ec2-msk-role" -> null
+      - assume_role_policy    = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "sts:AssumeRole"
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "ec2.amazonaws.com"
+                        }
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - create_date           = "2025-11-10T15:49:36Z" -> null
+      - force_detach_policies = false -> null
+      - id                    = "ec2-msk-role" -> null
+      - managed_policy_arns   = [
+          - "arn:aws:iam::251964342273:policy/msk-access-policy",
+        ] -> null
+      - max_session_duration  = 3600 -> null
+      - name                  = "ec2-msk-role" -> null
+      - path                  = "/" -> null
+      - tags                  = {} -> null
+      - tags_all              = {} -> null
+      - unique_id             = "AROATVKR6YAAUAMFURKRV" -> null
+        # (3 unchanged attributes hidden)
+    }
+
+  # aws_iam_role_policy_attachment.attach_policy will be destroyed
+  - resource "aws_iam_role_policy_attachment" "attach_policy" {
+      - id         = "ec2-msk-role/arn:aws:iam::251964342273:policy/msk-access-policy" -> null
+      - policy_arn = "arn:aws:iam::251964342273:policy/msk-access-policy" -> null
+      - role       = "ec2-msk-role" -> null
+    }
+
+  # aws_instance.ec2 will be destroyed
+  - resource "aws_instance" "ec2" {
+      - ami                                  = "ami-0df8c184d5f6ae949" -> null
+      - arn                                  = "arn:aws:ec2:us-east-1:251964342273:instance/i-0a462b3feffc1679a" -> null
+      - associate_public_ip_address          = true -> null
+      - availability_zone                    = "us-east-1a" -> null
+      - disable_api_stop                     = false -> null
+      - disable_api_termination              = false -> null
+      - ebs_optimized                        = false -> null
+      - force_destroy                        = false -> null
+      - get_password_data                    = false -> null
+      - hibernation                          = false -> null
+      - iam_instance_profile                 = "ec2-msk-profile" -> null
+      - id                                   = "i-0a462b3feffc1679a" -> null
+      - instance_initiated_shutdown_behavior = "stop" -> null
+      - instance_state                       = "running" -> null
+      - instance_type                        = "t2.micro" -> null
+      - ipv6_address_count                   = 0 -> null
+      - ipv6_addresses                       = [] -> null
+      - key_name                             = "Max" -> null
+      - monitoring                           = false -> null
+      - placement_partition_number           = 0 -> null
+      - primary_network_interface_id         = "eni-0cb97b6f7b0b0318d" -> null
+      - private_dns                          = "ip-10-0-0-9.ec2.internal" -> null
+      - private_ip                           = "10.0.0.9" -> null
+      - public_dns                           = "ec2-54-80-131-223.compute-1.amazonaws.com" -> null
+      - public_ip                            = "54.80.131.223" -> null
+      - region                               = "us-east-1" -> null
+      - secondary_private_ips                = [] -> null
+      - security_groups                      = [] -> null
+      - source_dest_check                    = true -> null
+      - subnet_id                            = "subnet-08ca6ae74fe9ed600" -> null
+      - tags                                 = {
+          - "Name" = "MSK-Client-Instance"
+        } -> null
+      - tags_all                             = {
+          - "Name" = "MSK-Client-Instance"
+        } -> null
+      - tenancy                              = "default" -> null
+      - user_data                            = <<-EOT
+            #!/bin/bash
+
+            #  Actualiza el sistema y prepara Java
+            yum update -y
+            amazon-linux-extras enable corretto11
+            yum install -y java-11-amazon-corretto wget unzip
+
+            #  Descarga y extrae Kafka 3.8.0
+            cd /opt
+            wget https://downloads.apache.org/kafka/3.8.0/kafka_2.13-3.8.0.tgz
+            tar -xzf kafka_2.13-3.8.0.tgz
+            ln -s kafka_2.13-3.8.0 kafka
+
+            #  Agrega Kafka al PATH para futuras sesiones
+            echo 'export KAFKA_HOME=/opt/kafka' >> /etc/profile
+            echo 'export PATH=$PATH:$KAFKA_HOME/bin' >> /etc/profile
+
+            #  Exporta las variables para el script actual
+            export KAFKA_HOME=/opt/kafka
+            export PATH=$PATH:$KAFKA_HOME/bin
+
+            #  Crea alias útil (opcional)
+            echo "alias kafka-brokers='echo \$BOOTSTRAP_BROKERS'" >> /etc/profile
+
+            # Crea script para listar tópicos usando TLS (SSL)
+            cat <<EOF > /usr/local/bin/kafka-list-topics
+            #!/bin/bash
+            /opt/kafka/bin/kafka-topics.sh --bootstrap-server "\$1" --command-config <(echo -e "security.protocol=SSL") --list
+            EOF
+
+            chmod +x /usr/local/bin/kafka-list-topics
+        EOT -> null
+      - user_data_replace_on_change          = false -> null
+      - vpc_security_group_ids               = [
+          - "sg-04c2c62ee6e457543",
+        ] -> null
+        # (7 unchanged attributes hidden)
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 1 -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "standard" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - primary_network_interface {
+          - delete_on_termination = true -> null
+          - network_interface_id  = "eni-0cb97b6f7b0b0318d" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/xvda" -> null
+          - encrypted             = false -> null
+          - iops                  = 3000 -> null
+          - tags                  = {} -> null
+          - tags_all              = {} -> null
+          - throughput            = 125 -> null
+          - volume_id             = "vol-0a1c0755100a94bc2" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp3" -> null
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # aws_internet_gateway.igw will be destroyed
+  - resource "aws_internet_gateway" "igw" {
+      - arn      = "arn:aws:ec2:us-east-1:251964342273:internet-gateway/igw-0c53cf0673bf2d356" -> null
+      - id       = "igw-0c53cf0673bf2d356" -> null
+      - owner_id = "251964342273" -> null
+      - region   = "us-east-1" -> null
+      - tags     = {
+          - "Name" = "VPC-Max-IGW"
+        } -> null
+      - tags_all = {
+          - "Name" = "VPC-Max-IGW"
+        } -> null
+      - vpc_id   = "vpc-0af1392eb90db5461" -> null
+    }
+
+  # aws_msk_cluster.msk will be destroyed
+  - resource "aws_msk_cluster" "msk" {
+      - arn                                           = "arn:aws:kafka:us-east-1:251964342273:cluster/maltamiranda-msk-cluster/049be1dd-8314-4daa-aa00-cb08a4ffda78-11" -> null
+      - bootstrap_brokers_tls                         = "b-1.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:9094,b-2.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:9094" -> null
+      - cluster_name                                  = "maltamiranda-msk-cluster" -> null
+      - cluster_uuid                                  = "049be1dd-8314-4daa-aa00-cb08a4ffda78-11" -> null
+      - current_version                               = "K3P5ROKL5A1OLE" -> null
+      - enhanced_monitoring                           = "DEFAULT" -> null
+      - id                                            = "arn:aws:kafka:us-east-1:251964342273:cluster/maltamiranda-msk-cluster/049be1dd-8314-4daa-aa00-cb08a4ffda78-11" -> null
+      - kafka_version                                 = "3.8.x" -> null
+      - number_of_broker_nodes                        = 2 -> null
+      - region                                        = "us-east-1" -> null
+      - storage_mode                                  = "LOCAL" -> null
+      - tags                                          = {} -> null
+      - tags_all                                      = {} -> null
+      - zookeeper_connect_string                      = "z-1.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:2181,z-2.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:2181,z-3.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:2181" -> null
+      - zookeeper_connect_string_tls                  = "z-1.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:2182,z-2.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:2182,z-3.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:2182" -> null
+        # (9 unchanged attributes hidden)
+
+      - broker_node_group_info {
+          - az_distribution = "DEFAULT" -> null
+          - client_subnets  = [
+              - "subnet-0031158b04510140b",
+              - "subnet-08ca6ae74fe9ed600",
+            ] -> null
+          - instance_type   = "kafka.t3.small" -> null
+          - security_groups = [
+              - "sg-017110096379ddfe4",
+            ] -> null
+
+          - connectivity_info {
+              - public_access {
+                  - type = "DISABLED" -> null
+                }
+              - vpc_connectivity {
+                  - client_authentication {
+                      - tls = false -> null
+
+                      - sasl {
+                          - iam   = false -> null
+                          - scram = false -> null
+                        }
+                    }
+                }
+            }
+
+          - storage_info {
+              - ebs_storage_info {
+                  - volume_size = 50 -> null
+                }
+            }
+        }
+
+      - encryption_info {
+          - encryption_at_rest_kms_key_arn = "arn:aws:kms:us-east-1:251964342273:key/91f0f5d2-e544-4699-8cce-3268bd37f36d" -> null
+
+          - encryption_in_transit {
+              - client_broker = "TLS" -> null
+              - in_cluster    = true -> null
+            }
+        }
+
+      - open_monitoring {
+          - prometheus {
+              - jmx_exporter {
+                  - enabled_in_broker = false -> null
+                }
+              - node_exporter {
+                  - enabled_in_broker = false -> null
+                }
+            }
+        }
+    }
+
+  # aws_route_table.public_rt will be destroyed
+  - resource "aws_route_table" "public_rt" {
+      - arn              = "arn:aws:ec2:us-east-1:251964342273:route-table/rtb-0ddbba6b06b24c2bf" -> null
+      - id               = "rtb-0ddbba6b06b24c2bf" -> null
+      - owner_id         = "251964342273" -> null
+      - propagating_vgws = [] -> null
+      - region           = "us-east-1" -> null
+      - route            = [
+          - {
+              - cidr_block                 = "0.0.0.0/0"
+              - gateway_id                 = "igw-0c53cf0673bf2d356"
+                # (11 unchanged attributes hidden)
+            },
+        ] -> null
+      - tags             = {
+          - "Name" = "Public-Route-Table"
+        } -> null
+      - tags_all         = {
+          - "Name" = "Public-Route-Table"
+        } -> null
+      - vpc_id           = "vpc-0af1392eb90db5461" -> null
+    }
+
+  # aws_route_table_association.public_1a will be destroyed
+  - resource "aws_route_table_association" "public_1a" {
+      - id             = "rtbassoc-085192f6641423fd3" -> null
+      - region         = "us-east-1" -> null
+      - route_table_id = "rtb-0ddbba6b06b24c2bf" -> null
+      - subnet_id      = "subnet-08ca6ae74fe9ed600" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_route_table_association.public_1b will be destroyed
+  - resource "aws_route_table_association" "public_1b" {
+      - id             = "rtbassoc-0ebafa09d7365f6a1" -> null
+      - region         = "us-east-1" -> null
+      - route_table_id = "rtb-0ddbba6b06b24c2bf" -> null
+      - subnet_id      = "subnet-0031158b04510140b" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_security_group.ec2_sg will be destroyed
+  - resource "aws_security_group" "ec2_sg" {
+      - arn                    = "arn:aws:ec2:us-east-1:251964342273:security-group/sg-04c2c62ee6e457543" -> null
+      - description            = "ec2 ssh" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-04c2c62ee6e457543" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 22
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 22
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - name                   = "ec2-sg" -> null
+      - owner_id               = "251964342273" -> null
+      - region                 = "us-east-1" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {} -> null
+      - vpc_id                 = "vpc-0af1392eb90db5461" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_security_group.msk_sg will be destroyed
+  - resource "aws_security_group" "msk_sg" {
+      - arn                    = "arn:aws:ec2:us-east-1:251964342273:security-group/sg-017110096379ddfe4" -> null
+      - description            = "MSK Security Group" -> null
+      - egress                 = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - id                     = "sg-017110096379ddfe4" -> null
+      - ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "0.0.0.0/0",
+                ]
+              - from_port        = 9092
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "tcp"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 9094
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - name                   = "msk-sg" -> null
+      - owner_id               = "251964342273" -> null
+      - region                 = "us-east-1" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {} -> null
+      - tags_all               = {} -> null
+      - vpc_id                 = "vpc-0af1392eb90db5461" -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_subnet.subnet1 will be destroyed
+  - resource "aws_subnet" "subnet1" {
+      - arn                                            = "arn:aws:ec2:us-east-1:251964342273:subnet/subnet-08ca6ae74fe9ed600" -> null
+      - assign_ipv6_address_on_creation                = false -> null
+      - availability_zone                              = "us-east-1a" -> null
+      - availability_zone_id                           = "use1-az6" -> null
+      - cidr_block                                     = "10.0.0.0/28" -> null
+      - enable_dns64                                   = false -> null
+      - enable_lni_at_device_index                     = 0 -> null
+      - enable_resource_name_dns_a_record_on_launch    = false -> null
+      - enable_resource_name_dns_aaaa_record_on_launch = false -> null
+      - id                                             = "subnet-08ca6ae74fe9ed600" -> null
+      - ipv6_native                                    = false -> null
+      - map_customer_owned_ip_on_launch                = false -> null
+      - map_public_ip_on_launch                        = false -> null
+      - owner_id                                       = "251964342273" -> null
+      - private_dns_hostname_type_on_launch            = "ip-name" -> null
+      - region                                         = "us-east-1" -> null
+      - tags                                           = {} -> null
+      - tags_all                                       = {} -> null
+      - vpc_id                                         = "vpc-0af1392eb90db5461" -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_subnet.subnet2 will be destroyed
+  - resource "aws_subnet" "subnet2" {
+      - arn                                            = "arn:aws:ec2:us-east-1:251964342273:subnet/subnet-0031158b04510140b" -> null
+      - assign_ipv6_address_on_creation                = false -> null
+      - availability_zone                              = "us-east-1b" -> null
+      - availability_zone_id                           = "use1-az1" -> null
+      - cidr_block                                     = "10.0.0.16/28" -> null
+      - enable_dns64                                   = false -> null
+      - enable_lni_at_device_index                     = 0 -> null
+      - enable_resource_name_dns_a_record_on_launch    = false -> null
+      - enable_resource_name_dns_aaaa_record_on_launch = false -> null
+      - id                                             = "subnet-0031158b04510140b" -> null
+      - ipv6_native                                    = false -> null
+      - map_customer_owned_ip_on_launch                = false -> null
+      - map_public_ip_on_launch                        = false -> null
+      - owner_id                                       = "251964342273" -> null
+      - private_dns_hostname_type_on_launch            = "ip-name" -> null
+      - region                                         = "us-east-1" -> null
+      - tags                                           = {} -> null
+      - tags_all                                       = {} -> null
+      - vpc_id                                         = "vpc-0af1392eb90db5461" -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # aws_vpc.max will be destroyed
+  - resource "aws_vpc" "max" {
+      - arn                                  = "arn:aws:ec2:us-east-1:251964342273:vpc/vpc-0af1392eb90db5461" -> null
+      - assign_generated_ipv6_cidr_block     = false -> null
+      - cidr_block                           = "10.0.0.0/16" -> null
+      - default_network_acl_id               = "acl-09a0bbc8c8321235d" -> null
+      - default_route_table_id               = "rtb-03947f338fc9de7ba" -> null
+      - default_security_group_id            = "sg-0432099a563d32ce1" -> null
+      - dhcp_options_id                      = "dopt-001234ca7f8ff6381" -> null
+      - enable_dns_hostnames                 = true -> null
+      - enable_dns_support                   = true -> null
+      - enable_network_address_usage_metrics = false -> null
+      - id                                   = "vpc-0af1392eb90db5461" -> null
+      - instance_tenancy                     = "default" -> null
+      - ipv6_netmask_length                  = 0 -> null
+      - main_route_table_id                  = "rtb-03947f338fc9de7ba" -> null
+      - owner_id                             = "251964342273" -> null
+      - region                               = "us-east-1" -> null
+      - tags                                 = {
+          - "Name" = "vpc-maltamiranda"
+        } -> null
+      - tags_all                             = {
+          - "Name" = "vpc-maltamiranda"
+        } -> null
+        # (4 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 0 to change, 15 to destroy.
+
+Changes to Outputs:
+  - ec2_ssh_access            = "ssh -i ./Max.pem ec2-user@54.80.131.223" -> null
+  - msk_bootstrap_brokers_tls = "b-1.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:9094,b-2.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:9094" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_route_table_association.public_1b: Destroying... [id=rtbassoc-0ebafa09d7365f6a1]
+aws_iam_role_policy_attachment.attach_policy: Destroying... [id=ec2-msk-role/arn:aws:iam::251964342273:policy/msk-access-policy]
+aws_route_table_association.public_1a: Destroying... [id=rtbassoc-085192f6641423fd3]
+aws_msk_cluster.msk: Destroying... [id=arn:aws:kafka:us-east-1:251964342273:cluster/maltamiranda-msk-cluster/049be1dd-8314-4daa-aa00-cb08a4ffda78-11]
+aws_instance.ec2: Destroying... [id=i-0a462b3feffc1679a]
+aws_iam_role_policy_attachment.attach_policy: Destruction complete after 1s
+aws_iam_policy.msk_policy: Destroying... [id=arn:aws:iam::251964342273:policy/msk-access-policy]
+aws_route_table_association.public_1b: Destruction complete after 1s
+aws_iam_policy.msk_policy: Destruction complete after 0s
+aws_route_table_association.public_1a: Destruction complete after 1s
+aws_route_table.public_rt: Destroying... [id=rtb-0ddbba6b06b24c2bf]
+aws_route_table.public_rt: Destruction complete after 2s
+aws_internet_gateway.igw: Destroying... [id=igw-0c53cf0673bf2d356]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 00m10s elapsed]
+aws_instance.ec2: Still destroying... [id=i-0a462b3feffc1679a, 00m10s elapsed]
+aws_internet_gateway.igw: Still destroying... [id=igw-0c53cf0673bf2d356, 00m10s elapsed]
+aws_instance.ec2: Still destroying... [id=i-0a462b3feffc1679a, 00m20s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 00m20s elapsed]
+aws_internet_gateway.igw: Still destroying... [id=igw-0c53cf0673bf2d356, 00m20s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 00m30s elapsed]
+aws_instance.ec2: Still destroying... [id=i-0a462b3feffc1679a, 00m30s elapsed]
+aws_internet_gateway.igw: Still destroying... [id=igw-0c53cf0673bf2d356, 00m30s elapsed]
+aws_instance.ec2: Still destroying... [id=i-0a462b3feffc1679a, 00m40s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 00m40s elapsed]
+aws_internet_gateway.igw: Still destroying... [id=igw-0c53cf0673bf2d356, 00m40s elapsed]
+aws_instance.ec2: Still destroying... [id=i-0a462b3feffc1679a, 00m50s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 00m50s elapsed]
+aws_internet_gateway.igw: Still destroying... [id=igw-0c53cf0673bf2d356, 00m50s elapsed]
+aws_internet_gateway.igw: Destruction complete after 50s
+aws_instance.ec2: Destruction complete after 56s
+aws_iam_instance_profile.ec2_instance_profile: Destroying... [id=ec2-msk-profile]
+aws_security_group.ec2_sg: Destroying... [id=sg-04c2c62ee6e457543]
+aws_iam_instance_profile.ec2_instance_profile: Destruction complete after 0s
+aws_iam_role.ec2_role: Destroying... [id=ec2-msk-role]
+aws_security_group.ec2_sg: Destruction complete after 1s
+aws_iam_role.ec2_role: Destruction complete after 1s
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 01m00s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 01m10s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 01m20s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 01m30s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 01m40s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 01m50s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 02m00s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 02m10s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 02m20s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 02m30s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 02m40s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 02m50s elapsed]
+aws_msk_cluster.msk: Still destroying... [id=arn:aws:kafka:us-east-1:251964342273:cl...49be1dd-8314-4daa-aa00-cb08a4ffda78-11, 03m00s elapsed]
+aws_msk_cluster.msk: Destruction complete after 3m3s
+aws_subnet.subnet1: Destroying... [id=subnet-08ca6ae74fe9ed600]
+aws_subnet.subnet2: Destroying... [id=subnet-0031158b04510140b]
+aws_security_group.msk_sg: Destroying... [id=sg-017110096379ddfe4]
+aws_subnet.subnet2: Destruction complete after 2s
+aws_subnet.subnet1: Destruction complete after 2s
+aws_security_group.msk_sg: Destruction complete after 2s
+aws_vpc.max: Destroying... [id=vpc-0af1392eb90db5461]
+aws_vpc.max: Destruction complete after 1s
+Releasing state lock. This may take a few moments...
+
+Destroy complete! Resources: 15 destroyed.
+PS C:\Users\maltamiranda\Documents\WORKSPACE\UTN\curso terra 2\practicas\actividades\c7-e2> 

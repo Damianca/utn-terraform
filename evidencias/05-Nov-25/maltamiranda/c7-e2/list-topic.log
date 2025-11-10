@@ -1,0 +1,17 @@
+[ec2-user@ip-10-0-0-9 ~]$ BROKERS="b-1.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:9094,b-2.maltamirandamskcluste.flz00t.c11.kafka.us-east-1.amazonaws.com:9094"
+[ec2-user@ip-10-0-0-9 ~]$ /opt/kafka/bin/kafka-topics.sh \
+  --bootstrap-server $BROKERS \
+  --command-config <(echo -e "security.protocol=SSL") \
+  --create \
+  --topic prueba-topic-max \
+  --partitions 3 \
+  --replication-factor 2
+Created topic prueba-topic-max.
+[ec2-user@ip-10-0-0-9 ~]$ /opt/kafka/bin/kafka-topics.sh \
+  --bootstrap-server $BROKERS \
+  --command-config <(echo -e "security.protocol=SSL") \
+  --list
+__amazon_msk_canary
+__consumer_offsets
+prueba-topic-max
+[ec2-user@ip-10-0-0-9 ~]$ 
